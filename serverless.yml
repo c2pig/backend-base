@@ -1,0 +1,74 @@
+service: review-pipeline
+frameworkVersion: ">=1.1.0 <2.0.0"
+provider:
+  name: aws
+  region: ap-southeast-1
+  runtime: nodejs4.3
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - sns:*
+        - s3:*
+      Resource: ["arn:aws:dynamodb:ap-southeast-1:*:*", "arn:aws:sns:ap-southeast-1:*:*", "arn:aws:s3:::*"]
+resources:
+  Resources:
+    IngestTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'review'
+    IngestBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: 'ugc-review'
+functions:
+  # routing:
+  #   handler: routing/routing.handler
+  #   events:
+  #     - sns: ${file(config.js):events.sns.routing}
+  validation:
+    handler: validation/validation.handler
+    memorySize: 128
+    environment:
+      SNS_TOPIC: arn:aws:sns:ap-southeast-1:023333458513:validation
+    events:
+      - http:
+          path: review
+          method: post
+  # moderation:
+  #   handler: moderation/moderation.handler
+  #   events:
+  #     - sns: ${file(config.js):events.sns.moderation}
+  # analytic:
+  #   handler: analytic/analytic.handler
+  #   events:
+  #     - sns: ${file(config.js):events.sns.analytic}
+  # collector:
+  #   handler: collector/collector.handler
+  #   events:
+  #     - schedule: ${file(config.js):events.schedule.collector}
+  ingest:
+    memorySize: 128
+    handler: ingest/ingest.handler
+    environment:
+      DYNAMO_DB: review
+      S3_BUCKET: ugc-review
+    events:
+      - sns: validation
