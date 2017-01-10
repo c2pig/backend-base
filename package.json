@@ -1,11 +1,11 @@
 {
-  "name": "review-service-baseline",
+  "name": "generator-review-service-baseline",
   "description":"basic review service",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "scripts": {},
   "author": "KB.T",
-  "main": "index.js",
+  "main": "generators/index.js",
   "dependencies": {
     "jsonschema": "^1.1.0",
     "uuid-validate": "0.0.2",
