@@ -1,0 +1,8 @@
+ingest:
+  memorySize: 128
+  handler: <%- basePath %>/ingest/ingest.handler
+  environment:
+    DYNAMO_DB: review
+    S3_BUCKET: <%- projectName %>-ugc-review
+  events:
+    - sns: validation

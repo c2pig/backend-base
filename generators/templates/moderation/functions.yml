@@ -1,0 +1,3 @@
+moderation:
+  handler: <%- basePath %>/moderation/moderation.handler
+  memorySize: 256

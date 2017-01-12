@@ -38,23 +38,3 @@ resources:
       Type: 'AWS::S3::Bucket'
       Properties:
         BucketName: '<%- projectName %>-ugc-review'
-    #<%- resourceList>
-functions:
-  validation:
-    handler: validation/validation.handler
-    memorySize: 128
-    environment:
-      SNS_TOPIC: arn:aws:sns:<%- awsRegion %>:<%- awsAccountId %>:validation
-    events:
-      - http:
-          path: review
-          method: post
-  ingest:
-    memorySize: 128
-    handler: ingest/ingest.handler
-    environment:
-      DYNAMO_DB: review
-      S3_BUCKET: <%- projectName %>-ugc-review
-    events:
-      - sns: validation
-  #<%- functionList>
