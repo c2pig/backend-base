@@ -1,0 +1,18 @@
+moderation-query:
+  handler: <%- codeDir %>/moderation.handler
+  memorySize: 128
+  environment:
+    DYNAMO_DB: <%- projectName %>-moderation
+  events:
+    - http:
+        path: moderation/query
+        method: GET
+# review-query:
+#   handler: <%- codeDir %>/view/review.handler
+#   memorySize: 128
+#   environment:
+#     DYNAMO_DB: <%- projectName %>-ugc-review
+#   events:
+#     - http:
+#         path: review/query
+#         method: GET

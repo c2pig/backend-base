@@ -1,5 +1,5 @@
 validation:
-  handler: <%- basePath %>/validation/validation.handler
+  handler: <%- codeDir %>/validation.handler
   memorySize: 128
   environment:
     SNS_TOPIC: arn:aws:sns:<%- awsRegion %>:<%- awsAccountId %>:validation

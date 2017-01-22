@@ -1,10 +1,10 @@
 'use strict';
-class Notifier {
+class Queue {
   constructor(sns) {
     this.sns = sns;
   }
-  notify(msg, topic, callback) {
+  put(msg, topic, callback) {
     this.sns.publish({ Message: msg, TopicArn: topic }, callback);
   }
 }
-module.exports = Notifier;
+module.exports = Queue;

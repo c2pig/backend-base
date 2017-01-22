@@ -10,7 +10,7 @@ class Validator {
     let validateImpl = (payload, format) => ({
       onFail : (fh) => {
         let ret = this.jsonschema.validator.validate(payload, format||this.jsonschema.payloadformat);
-
+        
         if(ret.errors.length !== 0) {
           fh(ret.errors);
         }

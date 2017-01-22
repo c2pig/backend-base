@@ -43,17 +43,24 @@ exports.handler = (event, context) => {
     let ingest = new Ingest(new doc.DynamoDB(),new AWS.S3());
     const Notifier = new require('../common/notifier');
     let notifier = new Notifier(new AWS.SNS());
+
     const done = (err, res) => {
       console.log(err);
       console.log(res);
     };
     //console.log('Received event:', JSON.stringify(event, null, 2));
     const message = JSON.parse(event.Records[0].Sns.Message);
+
     console.log('From SNS:', message);
     let key = uuid.v1();
     ingest.archive(key + '.input', message, done);
     if(!message.err) {
       console.log('persist db');
       ingest.persist(key, message, done);
+      notifier.notify(JSON.stringify(message), process.env.SNS_TOPIC, (err, data) => {
+          console.log('sns callback');
+          console.log(err);
+          console.log(data);
+      });
     }
 };
