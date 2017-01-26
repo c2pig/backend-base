@@ -1,0 +1,10 @@
+functions:
+  validation-example:
+    handler: <%- codeDir %>/validation.handler
+    memorySize: 128
+    environment:
+      EXAMPLE_CONFIG: 'this is an example config'
+    events:
+      - http:
+          path: review
+          method: post

@@ -1,3 +1,4 @@
+'use strict';
 var Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
@@ -13,13 +14,9 @@ module.exports = class extends Generator {
 	*/
     this.sourceRoot(cwd + '/../../../src')
 	const copies = {
-	  'ingest/functions.yml': 'tmp/ingest.func.tmp',
-      'validation/functions.yml': 'tmp/validation.func.tmp',
-      'moderation/functions.yml': 'tmp/moderation.func.tmp',
-      'view/functions.yml': 'tmp/view.func.tmp',
-	  'examples/**/*': this.options.codeDir,
-	  'serverless.yml': 'serverless.yml',
-	  '../package.import.json': 'package.json'
+	  'examples/**/*.js': this.options.codeDir,
+    'examples/**/*.tmp': 'tmp',    
+    '../package.import.json': 'package.json'
   };
 
 	const templateCopy = (path, dest) => this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.options);
@@ -31,6 +28,6 @@ module.exports = class extends Generator {
       }).bind(this));
     }).bind(this);
 
-	fileOps(templateCopy, copies);
+	   fileOps(templateCopy, copies);
   }
 };

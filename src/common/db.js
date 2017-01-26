@@ -59,10 +59,9 @@ class DB {
 	  this.db.updateItem(params, callback);
   }
 
-
   selectByFieldExists(field, table, callback) {
 
-	let params = {
+	  let params = {
       "FilterExpression": `attribute_exists(${field})`,
       "TableName": table
     };
