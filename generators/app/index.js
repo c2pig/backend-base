@@ -13,13 +13,13 @@ module.exports = class extends Generator {
 	* move the path to src/
 	*/
     this.sourceRoot(cwd + '/../../../src')
-	const copies = {
-	  'examples/**/*.js': this.options.codeDir,
-    'examples/**/*.tmp': 'tmp',    
-    '../package.import.json': 'package.json'
-  };
+  	const copies = {
+  	  'examples/**/*.js': this.options.codeDir,
+      'examples/**/*.tmp': 'tmp',
+      '../package.import.json': 'package.json'
+    };
 
-	const templateCopy = (path, dest) => this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.options);
+	   const templateCopy = (path, dest) => this.fs.copyTpl(this.templatePath(path), this.destinationPath(dest), this.options);
 
     const fileOps = ((action, files) => {
       Object.keys(files).forEach((function(path) {

@@ -1,6 +1,6 @@
 'use strict';
 
-let validation = require('review-service-baseline').pipe;
+let validation = require('gdp-backend-base').pipe;
 let resource;
 module.exports.handler = validation
   .init(function(rs, next) {

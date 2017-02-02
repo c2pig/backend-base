@@ -1,7 +1,7 @@
 {
-  "name": "review-service-base",
+  "name": "gdp-backend-base",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "scripts": {},
   "author": "KB.T",
   "dependencies": {

@@ -15,10 +15,11 @@ class DB {
           updatedAt: timestamp,
         },
       };
-    this.db.putItem(params, callback);
+
+    return this.db.put(params, callback);
   }
 
-  update(key, kvp, table, callback) {
+  updateOld(key, kvp, table, callback) {
 
 	  const timestamp = new Date().getTime();
 	  let params = {AttributeUpdates: {}};
@@ -56,8 +57,26 @@ class DB {
 	  }
 	  params.ReturnValues = "NONE";
 	  console.log(JSON.stringify(params));
-	  this.db.updateItem(params, callback);
+	  var ret = this.db.update(params, callback);
+    console.log('------');
+    console.log(ret);
   }
+
+
+    update(key, kvp, table, callback) {
+
+  	  const timestamp = new Date().getTime();
+  	  let params = {AttributeUpdates: {}};
+  	  params.TableName = table;
+  	  params.Key = { id : key };
+
+  	  for(var k in kvp) {
+  		    params.AttributeUpdates[k] = { Value: kvp[k], Action: "PUT" }
+  	  }
+  	  params.ReturnValues = "NONE";
+  	  console.log(JSON.stringify(params));
+  	  this.db.update(params, callback);
+    }
 
   selectByFieldExists(field, table, callback) {
 
@@ -65,7 +84,7 @@ class DB {
       "FilterExpression": `attribute_exists(${field})`,
       "TableName": table
     };
-    db.scan(params, callback);
+    this.db.scan(params, callback);
   }
 }
 module.exports = DB;

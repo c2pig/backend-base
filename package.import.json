@@ -1,7 +1,7 @@
 {
   "name": "<%- projectName %>-<%- serviceName %>",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "scripts": {},
   "author": "KB.T",
   "dependencies": {
@@ -9,7 +9,7 @@
     "js-yaml": "^3.7.0",
     "jsonschema": "^1.1.0",
     "uuid-validate": "0.0.2",
-    "review-service-baseline": "^0.1.0",
+    "gdp-backend-base": "^0.0.1",
     "webpurify": "1.0.1"
   },
   "devDependencies": {
